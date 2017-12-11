@@ -59,7 +59,7 @@ void loop() {
 
   int noteNumber = 0;
 
-  if (buttonState == HIGH) { // melody control button High then sound on
+  if (buttonState == LOW) { // melody control button LOW then sound on
     digitalWrite(trig, HIGH);
     delayMicroseconds(10);
     digitalWrite(trig, LOW);
@@ -71,8 +71,8 @@ void loop() {
     lcd.print(distance);
     lcd.print(" cm");
 
-    if (distance >= 5 && distance <= 30) {
-      noteNumber = map(distance, 5, 30, 0, 6);
+    if (distance >= 10 && distance <= 37) {
+      noteNumber = map(distance, 9, 36, 0, 6);
     }
 
     lcd.setCursor(0, 1);
@@ -105,11 +105,10 @@ void loop() {
     instrument = 57;
     talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
     noteOn(0, sound[i][noteNumber], 100); // sound on
-    delay(1500);
+    delay(1000);
     noteOff(0, sound[i][noteNumber], 0); // sound off
-  }
 
-  if (buttonState1 == LOW) { // if button press then octave change
+    if (buttonState1 == LOW) { // if button press then octave change
     if (i == 2) {
       i = 0;
     }
@@ -117,6 +116,10 @@ void loop() {
       i++;
     }
   }
+  }
+
+
+  
 }
 
 // Send a MIDI note-on message.  Like pressing a piano key
